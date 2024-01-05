@@ -3,7 +3,10 @@ from AppResto import views
 
 urlpatterns=[
     path('inicio',views.inicio,name="inicio"),
-    path('catalogo',views.Restos,name="Restos"),
-    path('mi_usuario',views.mi_usuario, name="mi_usuario"),
-
+    path('restaurantes',views.Restaurantes,name="Restos"),
+    path('crear_restaurante',views.Crear_Restaurante, name="crear_restaurante"),
+    path('crear_reseña',views.Crear_Reseñas, name="crear_reseña"),
+    path('reseñas',views.Reseñas,name="reseñas"),
+    path('iniciar_sesion',views.iniciar_sesion, name="iniciar_sesion"),
+    path('usuario',views.mi_usuario, name="usuario"),
 ]

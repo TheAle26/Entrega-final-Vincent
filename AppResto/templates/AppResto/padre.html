@@ -20,9 +20,13 @@
         <!-- Navigation-->
         <nav class="navbar navbar-light bg-light static-top">
             <div class="container">
-                <a class="navbar-brand" href="{% url 'inicio' %}">Inicio</a>
-                <a class="navbar-brand" href="{% url 'product_list' %}">Catalogo</a>
-                <a class="btn btn-primary" href="#signup">Sign Up</a>
+                <a class="btn btn-secondary" href="{% url 'inicio' %}">Inicio</a>
+                <a class="navbar-brand" href="{% url 'Restos' %}">Restaurantes</a>
+                <a class="navbar-brand" href="{% url 'reseñas' %}">Reseñas</a>
+                <a class="navbar-brand" href="{% url 'crear_reseña' %}">Hacer Reseña</a>
+                <!-- poner que si inicie sesion aparezca mi nombre-->
+                <a class="btn btn-primary" href="{% url 'usuario' %}">Mi Nombre</a>
+                <a class="btn btn-primary" href="{% url 'iniciar_sesion' %}">Iniciar Sesion</a>
             </div>
         </nav> 
         <!-- Masthead-->
