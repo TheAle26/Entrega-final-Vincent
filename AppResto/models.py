@@ -1,5 +1,4 @@
 from django.db import models
-from datetime import datetime
 
 # Create your models here.
 
@@ -20,9 +19,9 @@ class Restaurante(models.Model):
 
 class Reseña(models.Model):
     restaurantre = models.CharField(max_length=99)
-    reseñas = models.ValueRange(start=0,end=5)
-    estrellas = models.FloatField(max_length=250)
+    #reseñas = models.ValueRange(start=0,end=5)
+    estrellas = models.ValueRange(start=0,end=5)
     ubicacion=models.CharField(max_length=99)
     fecha_de_visita = models.DateField()
-    fecha_de_reseña = models.DateField(datetime.now())
+    fecha_de_reseña = models.DateField()
     foto=models.ImageField()

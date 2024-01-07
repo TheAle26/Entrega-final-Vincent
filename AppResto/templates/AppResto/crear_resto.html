@@ -1,6 +1,24 @@
-{% extends 'AppResto/padre.html' %}
-{% load static %}
 
-{% block tituloGrande %}
-<h1 class="mb-5">aca haremos restaurantes!</h1>
-{% endblock %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nueva Reseña</title>
+    <form action="/AppResto/reseñas" method="post"> {% csrf_token %}
+        <title>Nueva Reseña</title>
+        
+            <script>
+                date = new Date();
+                year = date.getFullYear();
+                month = date.getMonth() + 1;
+                day = date.getDate();
+                document.getElementById("current_date").innerHTML = month + "/" + day + "/" + year;
+            </script>
+        </div> </p>
+        <input type="submit" value="Guardar">
+    </form>
+</head>
+<body>
+</body>
+</html>
