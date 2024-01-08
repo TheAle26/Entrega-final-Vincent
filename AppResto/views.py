@@ -39,7 +39,23 @@ def Crear_Reseñas(request):
     return render(request,"AppResto/crear_reseña.html")
 
 def Crear_Restaurante(request):
+
     if request.method== "POST":
-        nuevo_resto= AppResto.forms.Restaurante_form(request.POST())
+        formulario= AppResto.forms.Restaurante_form(request.POST) #obtiene del formulario
+        print(formulario)
+        if formulario.is_valid:
+            info=formulario.cleaned_data
+            resto_nuevo=Restaurante(
+                nombre=info["nombre"],
+                reseñas=info["reseñas"],
+                descripcion=info["descripcion"],
+                ubicacion=info["ubicacion"],
+                instagram=info["instagram"],
+                #foto=info["foto"],
+            )
+            resto_nuevo.save()
+            return render(request,"AppResto/restaurantes.html")
 #minutio 50
-    return render(request,"AppResto/crear_resto.html")
+    else:
+        formulario= AppResto.forms.Restaurante_form()
+        return render(request,"AppResto/crear_resto.html",{"mi_formu":formulario})
