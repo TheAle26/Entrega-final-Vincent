@@ -18,10 +18,11 @@ class Restaurante(models.Model):
 
 
 class Reseña(models.Model):
-    restaurantre = models.CharField(max_length=99)
+    restaurante = models.CharField(max_length=99)
     #reseñas = models.IntegerField()
     estrellas = models.FloatField()
     ubicacion=models.CharField(max_length=99)
     fecha_de_visita = models.DateField()
     fecha_de_reseña = models.DateField()
+    reseña=models.CharField(max_length=150)
     #foto=models.ImageField()

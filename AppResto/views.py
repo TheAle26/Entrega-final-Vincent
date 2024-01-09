@@ -25,7 +25,9 @@ def Restaurantes(request):
     return render(request,"AppResto/restaurantes.html",{"restaurantes":restaurantes})
 
 def Reseñas(request):
-    return render(request,"AppResto/reseñas.html")
+    
+    Reseñas=Reseña.objects.all()
+    return render(request,"AppResto/reseñas.html",{"reseñas":Reseñas})
 
 
 
@@ -39,11 +41,12 @@ def Crear_Reseñas(request):
         if formulario.is_valid:
             info=formulario.cleaned_data
             reseña_nuevo=Reseña(
-                restaurantre=info["restaurantre"],
+                restaurante=info["restaurantre"],
                 estrellas=info["estrellas"],
                 ubicacion=info["ubicacion"],
                 fecha_de_visita=info["fecha_de_visita"],
                 fecha_de_reseña= datetime.datetime.now(),
+                reseña=info["reseña"]
                 #foto=info["foto"],
             )
             reseña_nuevo.save()
@@ -96,3 +99,13 @@ def buscar_restaurante(request):
         return render(request, "AppResto/buscar_restaurante.html", {"resultado_busqueda": resultado_busqueda})
     else:
         return render(request, "AppResto/buscar_restaurante.html")
+    
+
+def buscar_reseña(request):
+    if request.method == 'GET' and 'pedido' in request.GET:
+        restaurante_pedido = request.GET['pedido']
+        resultado_busqueda = Reseña.objects.filter(restaurante__icontains=restaurante_pedido)
+        
+        return render(request, "AppResto/buscar_reseña.html", {"resultado_busqueda": resultado_busqueda})
+    else:
+        return render(request, "AppResto/buscar_reseña.html")

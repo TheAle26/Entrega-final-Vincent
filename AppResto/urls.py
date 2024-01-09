@@ -12,5 +12,6 @@ urlpatterns=[
     
     #ahora para buscar, me gustaria integrar
     path('buscar_restaurante/',views.buscar_restaurante,name='buscar_restaurante'),
+    path('buscar_reseña/',views.buscar_reseña,name='buscar_reseña'),
 
 ]

@@ -7,7 +7,9 @@
     <title>Nueva Reseña</title>
 </head>
 <body>
-    <h1>Crear nuevo Reseña</h1>
+    <a class="bootstrap-icons" href="{% url 'reseñas' %}">Salir</a>
+    <h1>Crear nueva Reseña</h1>
+
     <form action="" method="post"> {% csrf_token %}
 
         {{mi_formu.as_p}}

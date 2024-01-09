@@ -36,13 +36,13 @@
 
         <h1 class="mb-5">Aca hay Restaurantes!</h1>
         
-        <a class="btn btn-primary" href="{% url 'buscar_restaurante' %}">Buscar</a>
+        <a class="searh" href="{% url 'buscar_restaurante' %}"><strong><font size= "4">Buscar</font size></strong></a>
         {% for x in restaurantes %}
         <p><strong><font size= "7">{{x.nombre}}</font size></strong></p>
         <p>Reseña: {{x.reseñas}}</p>
         <p>Descripcion: {{x.descripcion}}</p>
         <p>Ubicacion: {{x.ubicacion}}</p>
-        <p>instagram: {{x.instagram}}</p>
+        <p><a href="{{x.instagram}}">instagram</a></p>
         <p> </p>
         <p> </p>
         <p> </p>

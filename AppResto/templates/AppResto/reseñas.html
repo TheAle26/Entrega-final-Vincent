@@ -1,17 +1,49 @@
-{% extends 'AppResto/padre.html' %}
-{% load static %}
 
-{% block tituloGrande %}
-<h1 class="mb-5">aca hay reseñas!</h1>
-{% endblock %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        {% load static %}
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Landing Page - Start Bootstrap Theme</title>
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <!-- Bootstrap icons-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" type="text/css" />
+        <!-- Google fonts-->
+        <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="{% static 'AppResto/css/styles.css' %}"rel="stylesheet" />
+    </head>
+    <body>
+        <!-- Navigation-->
+        <nav class="navbar navbar-light bg-light static-top">
+            <div class="container">
+        
+                <a class="btn btn-secondary" href="{% url 'inicio' %}">Inicio</a>
+                <a class="navbar-brand" href="{% url 'Restos' %}">Restaurantes</a>
+                <a class="navbar-brand" href="{% url 'crear_reseña' %}">Hacer Reseña</a>
+                <a class="btn btn-primary" href="{% url 'usuario' %}">Mi Nombre</a>
+                <a class="btn btn-primary" href="{% url 'iniciar_sesion' %}">Iniciar Sesion</a>
+                </div>
+               
+            </div>
+        </nav> 
 
-{% block botones %}
+        <h1 class="mb-5">Aca hay Reseñas!</h1>
+        
+        <a class="search" href="{% url 'buscar_reseña' %}">   <strong><font size= "4">Buscar</font size></strong></a>
+        {% for x in reseñas %}
+            <p><strong><font size= "7">{{x.restaurante}}</font size></strong></p>
+            <p>estrellas: {{x.estrellas}}</p>
+            <p>ubicacion: {{x.ubicacion}}</p>
+            <p>Reseña: {{x.reseña}}</p>
+            <p>fecha_de_visita: {{x.fecha_de_visita}}</p>
+            <p>fecha_de_reseña: {{x.fecha_de_reseña}}</p>
+            <p> </p>
+            <p> </p>
+            <p> </p>
+        {% endfor %}
 
-<a class="btn btn-secondary" href="{% url 'inicio' %}">Inicio</a>
-<a class="navbar-brand" href="{% url 'Restos' %}">Restaurantes</a>
-<a class="navbar-brand" href="{% url 'crear_reseña' %}">Hacer Reseña</a>
-<a class="btn btn-primary" href="{% url 'usuario' %}">Mi Nombre</a>
-<a class="btn btn-primary" href="{% url 'iniciar_sesion' %}">Iniciar Sesion</a>
-<!-- poner que si inicie sesion aparezca mi nombre-->
-
-{% endblock %}

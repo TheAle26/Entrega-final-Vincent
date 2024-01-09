@@ -20,15 +20,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Buscar Restaurante</title>
+    <title>Buscar Reseña</title>
 </head>
 <body>
     <nav class="navbar navbar-light bg-light static-top">
         <div class="container">
     
             <a class="btn btn-secondary" href="{% url 'inicio' %}">Inicio</a>
-            <a class="navbar-brand" href="{% url 'Restos' %}">Ver Todos</a>
-            <a class="navbar-brand" href="{% url 'crear_restaurante' %}">Agregar Restaurante</a>
+            <a class="navbar-brand" href="{% url 'reseñas' %}">Ver Todas</a>
+            <a class="navbar-brand" href="{% url 'crear_reseña' %}">Agregar Reseña</a>
             <!-- poner que si inicie sesion aparezca mi nombre-->
             <a class="navbar-brand" href="{% url 'usuario' %}">Mi Nombre</a>
             <a class="btn btn-primary" href="{% url 'iniciar_sesion' %}">Iniciar Sesion</a>
@@ -38,24 +38,27 @@
     </nav> 
 </body>
 <body>
-    <h1>Buscar Restaurante</h1>
+    <h1>Buscar Reseña</h1>
 
-    <form action="/AppResto/buscar_restaurante/" method="GET">
+    <form action="/AppResto/buscar_reseña/" method="GET">
 
-        Ingrese el nobre del Restaurante que busca: <input type="text" name="pedido" >
+        Ingrese el nobre del Restaurante del que busca reseña: <input type="text" name="pedido" >
 
         <input type="submit" value="Buscar">
 
     </form>
     {% for x in resultado_busqueda %}
-    <p><strong><font size= "7">{{x.nombre}}</font size></strong></p>
-    <p>Reseña: {{x.reseñas}}</p>
-    <p>Descripcion: {{x.descripcion}}</p>
-    <p>Ubicacion: {{x.ubicacion}}</p>
-    <p><a href="{{x.instagram}}">instagram</a></p>
-    <p> </p>
-    <p> </p>
-    <p> </p>
-    {% endfor %}
+    <p><strong><font size= "7">{{x.restaurante}}</font size></strong></p>
+        <p>estrellas: {{x.estrellas}}</p>
+        <p>ubicacion: {{x.ubicacion}}</p>
+        <p>Reseña: {{x.reseña}}</p>
+        <p>fecha_de_visita: {{x.fecha_de_visita}}</p>
+        <p>fecha_de_reseña: {{x.fecha_de_reseña}}</p>
+        
+        <p> </p>
+        <p> </p>
+        <p> </p>
+        {% endfor %}
 </body>
 </html>
+
