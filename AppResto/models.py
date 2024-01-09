@@ -16,13 +16,20 @@ class Restaurante(models.Model):
     instagram = models.URLField()
     #foto=models.ImageField()
 
+    def __str__(self):
+        return self.nombre
+
+
 
 class Reseña(models.Model):
     restaurante = models.CharField(max_length=99)
     #reseñas = models.IntegerField()
-    estrellas = models.FloatField()
+    puntuacion = models.FloatField()
     ubicacion=models.CharField(max_length=99)
     fecha_de_visita = models.DateField()
     fecha_de_reseña = models.DateField()
     reseña=models.CharField(max_length=150)
     #foto=models.ImageField()
+
+    def __str__(self):
+        return f"Reseña de {self.nombre}"

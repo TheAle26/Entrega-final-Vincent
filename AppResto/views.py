@@ -41,8 +41,8 @@ def Crear_Reseñas(request):
         if formulario.is_valid:
             info=formulario.cleaned_data
             reseña_nuevo=Reseña(
-                restaurante=info["restaurantre"],
-                estrellas=info["estrellas"],
+                restaurante=info["restaurante"],
+                puntuacion=info["estrellas"],
                 ubicacion=info["ubicacion"],
                 fecha_de_visita=info["fecha_de_visita"],
                 fecha_de_reseña= datetime.datetime.now(),
