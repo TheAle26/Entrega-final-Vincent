@@ -1,0 +1,30 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nueva Reseña</title>
+</head>
+<body>
+    <h1>Buscar Restaurante</h1>
+
+    <form action="/AppResto/buscar_restaurante/" method="GET">
+
+        Ingrese el nobre del Restaurante que busca: <input type="text" name="pedido" >
+
+        <input type="submit" value="Buscar">
+
+    </form>
+    {% for x in resultado_busqueda %}
+    <p><strong><font size= "7">{{x.nombre}}</font size></strong></p>
+    <p>Reseña: {{x.reseñas}}</p>
+    <p>Descripcion: {{x.descripcion}}</p>
+    <p>Ubicacion: {{x.ubicacion}}</p>
+    <p>instagram: {{x.instagram}}</p>
+    <p> </p>
+    <p> </p>
+    <p> </p>
+    {% endfor %}
+</body>
+</html>

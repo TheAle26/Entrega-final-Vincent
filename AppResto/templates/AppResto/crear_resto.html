@@ -7,9 +7,10 @@
     <title>Nuevo Restaurante</title>
 </head>
 <body>
+    <h1>Cargar nuevo Restaurante</h1>
     <form action="" method="post"> {% csrf_token %}
 
-        {{mi_formu}}
+        {{mi_formu.as_p}}
 
         <input type="submit" value="Guardar">
     </form>
