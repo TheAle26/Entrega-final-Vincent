@@ -16,5 +16,15 @@ urlpatterns=[
 
     #para actualizar
     path('Actualizar_Restaurante/<restaurante>',views.Actualizar_Restaurante,name='Actualizar_Restaurante'),
+    path('select_update_reseña/', views.select_update_Reseña, name='select_update_reseña'),
+    path('update_reseña/<int:reseña_id>/', views.update_Reseña, name='update_reseña'),
+    
 
+    #para borrar
+    path('select_delete_restaurante',views.select_delete_Restaurante,name='select_delete_restaurante'),
+    path('delete_restaurante/<restaurante_nombre>/', views.delete_Restaurante, name='delete_restaurante'),
+
+    path('select_delete_reseña/', views.select_delete_Reseña, name='select_delete_reseña'),
+    path('delete_reseña/<int:reseña_id>/', views.delete_Reseña, name='delete_reseña'),
+    
 ]
