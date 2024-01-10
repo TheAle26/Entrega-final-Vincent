@@ -1,8 +1,9 @@
 
 <!DOCTYPE html>
 <html lang="en">
+    {% load static %}
     <head>
-        {% load static %}
+   
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
@@ -21,30 +22,37 @@
         <!-- Navigation-->
         <nav class="navbar navbar-light bg-light static-top">
             <div class="container">
-        
+                {% block botones %}
                 <a class="btn btn-secondary" href="{% url 'inicio' %}">Inicio</a>
                 <a class="navbar-brand" href="{% url 'Restos' %}">Restaurantes</a>
                 <a class="navbar-brand" href="{% url 'crear_reseña' %}">Hacer Reseña</a>
                 <a class="btn btn-primary" href="{% url 'usuario' %}">Mi Nombre</a>
                 <a class="btn btn-primary" href="{% url 'iniciar_sesion' %}">Iniciar Sesion</a>
+                {% endblock %}
                 </div>
                
             </div>
         </nav> 
 
-
+        {% block buscaryeditar %}
         <h1 class="mb-5">Aca hay Reseñas!
            <p> <div class="text-rg-end">
                 <a class="btn btn-secondary" href="{% url 'buscar_reseña' %}"><strong><font size= "4">Buscar</font size></strong></a>
                 
                      <div class="text-lg-end">
-                <a class="btn btn-secondary" href="{% url 'select_delete_reseña' %}"><strong><font size= "4" color="red">BORRAR</font size></strong></a>
+                <a class="btn btn-secondary" href="{% url 'select_reseña' %}"><strong><font size= "4" color="red">EDITAR</font size></strong></a>
             </div>
         </div>
         </p>
         </h1>
-                <div class="row justify-content-center">
-                <div class="col-xl-6">
+        {% endblock %}
+                
+                    <header class="masthead">
+                        <div class="container position-relative">
+                            <div class="row justify-content-center">
+                                <div class="col-xl-6">
+                                    <div class="text-center text-white">
+                    {% block muestra %}
         {% for x in reseñas %}
             <p><strong><font size= "5">Restaurante: {{x.restaurante}}</font size></strong></p>
             <p>Reseña: {{x.reseña}}</p>
@@ -60,4 +68,13 @@
 
          </div>
          </div>
+         {% endblock %}
+        </div>
+    </div>
+</div>
+</div>
+</header>
+        </boddy>
+        </html>
+
 

@@ -1,0 +1,22 @@
+<!-- select_reseña.html -->
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    {% load static %}
+    <a class="bootstrap-icons" href="{% url 'reseñas' %}">Salir</a>
+</head>
+<body>
+    {% for reseña in reseñas %}
+        <li><strong> <Hecha sobre Restaurante:</strong> {{ reseña.restaurante }} <strong></strong>Reseña:</strong> {{ reseña.reseña }} <strong>fecha de reseña:</strong> {{ reseña.fecha_de_reseña }} </li>
+        <form action="{% url 'update_reseña' reseña.id %}" method="get">
+            <button type="submit">Editar</button>
+        </form>
+        <form action="{% url 'delete_reseña' reseña.id %}" method="post">
+            {% csrf_token %}
+            <button type="submit"><font color="red">Borrar</font></button>
+        </form>
+    
+    {% endfor %}
+</body>
+</html>

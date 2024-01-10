@@ -8,6 +8,9 @@ import AppResto.forms
 #from django.forms import CartAddProductForm
 # Create your views here.
 
+def prueba(request):
+    return render(request,"AppResto/prueba.html")
+
 def inicio(request):
     return render(request,"AppResto/inicio.html")
 
@@ -27,8 +30,8 @@ def Restaurantes(request):
 
 def Reseñas(request):
     
-    Reseñas=Reseña.objects.all()
-    return render(request,"AppResto/reseñas.html",{"reseñas":Reseñas})
+    reseñas=Reseña.objects.all()
+    return render(request,"AppResto/reseñas.html",{"reseñas":reseñas})
 
 
 
@@ -45,7 +48,7 @@ def Crear_Reseñas(request):
             info=formulario.cleaned_data
             reseña_nuevo=Reseña(
                 restaurante=info["restaurante"],
-                puntuacion=info["estrellas"],
+                puntuacion=info["puntuacion"],
                 ubicacion=info["ubicacion"],
                 fecha_de_visita=info["fecha_de_visita"],
                 fecha_de_reseña= datetime.datetime.now(),
@@ -53,7 +56,8 @@ def Crear_Reseñas(request):
                 #foto=info["foto"],
             )
             reseña_nuevo.save()
-            return render(request,"AppResto/reseñas.html")
+            reseñas=Reseña.objects.all()
+            return render(request,"AppResto/reseñas.html",{"reseñas":reseñas})
     else:
         formulario= AppResto.forms.Reseña_form()
         return render(request,"AppResto/crear_reseña.html",{"mi_formu":formulario}) 
@@ -76,7 +80,8 @@ def Crear_Restaurante(request):
                 #foto=info["foto"],
             )
             resto_nuevo.save()
-            return render(request,"AppResto/restaurantes.html")
+            restaurantes=Restaurante.objects.all()
+            return render(request,"AppResto/restaurantes.html",{"restaurantes":restaurantes})
     else:
         formulario= AppResto.forms.Restaurante_form()
         return render(request,"AppResto/crear_resto.html",{"mi_formu":formulario})
@@ -110,86 +115,84 @@ def buscar_reseña(request):
 
 
 #aca para update
-    
+
 def update_Reseña(request, reseña_id):
     reseña_update = get_object_or_404(Reseña, id=reseña_id)
-    if request.method== "POST":
-        formulario= AppResto.forms.Reseña_form(request.POST) #obtiene del formulario
-        print(formulario)
-        if formulario.is_valid:
-            info=formulario.cleaned_data
-            
-            reseña_update.restaurante=info["restaurante"],
-            reseña_update.puntuacion=info["puntuacion"],
-            reseña_update.ubicacion=info["ubicacion"],
-            reseña_update.fecha_de_visita=info["fecha_de_visita"],
-            reseña_update.fecha_de_reseña=datetime.datetime.now(),
-            reseña_update.reseña=info["reseña"],
-            #reseña_update=info["foto"],
+
+    if request.method == "POST":
+        formulario = AppResto.forms.Reseña_form(request.POST)
+        if formulario.is_valid():  # Asegúrate de agregar los paréntesis aquí
+            info = formulario.cleaned_data
+
+            restaurante_nombre = info["restaurante"].nombre
+            reseña_update.restaurante = restaurante_nombre
+
+            reseña_update.puntuacion = info["puntuacion"]
+            reseña_update.ubicacion = info["ubicacion"]
+            reseña_update.fecha_de_visita = info["fecha_de_visita"]
+            reseña_update.fecha_de_reseña = datetime.datetime.now()
+            reseña_update.reseña = info["reseña"]
+
             reseña_update.save()
             reseñas = Reseña.objects.all()
-            return render(request,"AppResto/reseñas.html",{"reseñas": reseñas})
-    else:
-        formulario= AppResto.forms.Restaurante_form(initial={"restaurante":reseña_update.restaurante,
-                                                             "puntuacion":reseña_update.puntuacion,
-                                                             "ubicacion":reseña_update.ubicacion,
-                                                             "fecha_de_visita":reseña_update.fecha_de_visita,
-                                                             "fecha_de_reseña":reseña_update.fecha_de_reseña,
-                                                             "reseña":reseña_update.reseña})
-       
-        return render(request,"AppResto/update_reseña.html",{"mi_formu":formulario})
 
-def select_update_Reseña(request):
+            return render(request, "AppResto/reseñas.html", {"reseñas": reseñas})
+    else:
+        formulario = AppResto.forms.Reseña_form(initial={
+            "restaurante": reseña_update.restaurante,
+            "puntuacion": reseña_update.puntuacion,
+            "ubicacion": reseña_update.ubicacion,
+            "fecha_de_visita": reseña_update.fecha_de_visita,
+            "fecha_de_reseña": reseña_update.fecha_de_reseña,
+            "reseña": reseña_update.reseña
+        })
+
+        return render(request, "AppResto/update_reseña.html", {"mi_formu": formulario})
+
+
+def select_Reseña(request):
     Reseñas = Reseña.objects.all()
-    return render(request, "AppResto/select_update_reseña.html", {"reseñas":Reseñas})
-    
+    return render(request, "AppResto/select_reseña.html", {"reseñas":Reseñas})
 
-def Actualizar_Restaurante(request,Restaurante_nombre):
-    restaurante_elegido=Restaurante.objects.get(nombre=Restaurante_nombre)
-    if request.method== "POST":
-        formulario= AppResto.forms.Restaurante_form(request.POST) #obtiene del formulario
-        print(formulario)
-        if formulario.is_valid:
-            info=formulario.cleaned_data
-            
-            restaurante_elegido.nombre=info["nombre"],
-            restaurante_elegido.reseñas=info["reseñas"],
-            restaurante_elegido.descripcion=info["descripcion"],
-            restaurante_elegido.ubicacion=info["ubicacion"],
-            restaurante_elegido.instagram=info["instagram"],
-            #foto=info["foto"],
-            restaurante_elegido.save()
-            return render(request,"AppResto/restaurantes.html")
+
+def update_Restaurante(request, restaurante_id):
+    restaurante_update = get_object_or_404(Restaurante, id=restaurante_id)
+
+    if request.method == "POST":
+        formulario = AppResto.forms.Reseña_form(request.POST)
+        if formulario.is_valid():  # Asegúrate de agregar los paréntesis aquí
+            info = formulario.cleaned_data
+
+        
+            restaurante_update.nombre = info["nombre"]
+            restaurante_update.reseñas = info["reseñas"]
+            restaurante_update.descripcion = info["descripcion"]
+            restaurante_update.instagram = info["instagram"]
+            restaurante_update.ubicacion = info["ubicacion"]
+
+            restaurante_update.save()
+            restaurantes = Restaurante.objects.all()
+
+            return render(request, "AppResto/restaurantes.html", {"restaurantes":restaurantes})
     else:
-        formulario= AppResto.forms.Restaurante_form(initial={"nombre":restaurante_elegido.nombre,"reseñas":restaurante_elegido.reseñas,"descripcion":restaurante_elegido.descripcion,"ubicacion":restaurante_elegido.ubicacion,"instagram":restaurante_elegido.instagram})
-       
-        return render(request,"AppResto/update_restaurante.html",{"mi_formu":formulario})
+        formulario = AppResto.forms.Reseña_form(initial={
+            "nombre": restaurante_update.nombre,
+            "reseñas": restaurante_update.reseñas,
+            "descripcion": restaurante_update.descripcion,
+            "instagram": restaurante_update.instagram,
+            "ubicacion": restaurante_update.ubicacion,
+            
+        })
+
+        return render(request, "AppResto/update_restaurante.html", {"mi_formu": formulario})
+
+
+def select_Restaurante(request):
+    restaurantes = Restaurante.objects.all()
+    return render(request, "AppResto/select_restaurantes.html", {"restaurantes":restaurantes})
     
-#borrar restaurante
-
-def delete_Restaurante(request, restaurante_nombre):
- 
-    restaurante = Restaurante.objects.get(nombre=restaurante_nombre)
-    restaurante.delete()
- 
-    # vuelvo al menú
-    restaurantess = Restaurante.objects.all()  # trae todos los profesores
- 
-    restaurantes = {"restaurantes": restaurantess}
- 
-    return render(request, "AppResto/restaurantes.html", restaurantes)
-
-def select_delete_Restaurante(request):
-    restaurantess = Restaurante.objects.all()  # trae todos los profesores
- 
-    restaurantes = {"restaurantes": restaurantess}
- 
-    return render(request, "AppResto/select_delete_restaurante.html", restaurantes)
-
-#borrar reseña
-
-# views.py
-
+    
+#borrar 
 
 
 def delete_Reseña(request, reseña_id):
@@ -200,8 +203,14 @@ def delete_Reseña(request, reseña_id):
     reseñas = Reseña.objects.all()
     return render(request, "AppResto/reseñas.html", {"reseñas": reseñas})
 
-def select_delete_Reseña(request):
-    Reseñas = Reseña.objects.all()
-    return render(request, "AppResto/select_delete_reseña.html", {"reseñas":Reseñas})
+def delete_Restaurante(request, restaurante_id):
+    restaurante = get_object_or_404(Restaurante, id=restaurante_id)
+    restaurante.delete()
+
+    # Recargar la lista de reseñas después de la eliminación
+    restaurantes = Restaurante.objects.all()
+    return render(request, "AppResto/restaurante.html", {"restaurantes": restaurantes})
+
+
 
 

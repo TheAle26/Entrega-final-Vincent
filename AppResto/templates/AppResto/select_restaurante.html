@@ -1,0 +1,22 @@
+<!-- select_restaurante.html -->
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    {% load static %}
+    <a class="bootstrap-icons" href="{% url 'Restos' %}">Salir</a>
+</head>
+<body>
+    {% for restaurante in restaurantes %}
+        <li><strong> <Nombre:</strong> {{ restaurante.nombre }} <strong>instagram:</strong> {{ restaurante.instagram }} <strong>Reseñas:</strong> {{ restaurante.reseñas }} </li>
+        <form action="{% url 'update_restaurante' restaurante.id %}" method="get">
+            <button type="submit">Editar</button>
+        </form>
+        <form action="{% url 'delete_restaurante' restaurante.id %}" method="post">
+            {% csrf_token %}
+            <button type="submit"><font color="red">Borrar</font></button>
+        </form>
+    
+    {% endfor %}
+</body>
+</html>
