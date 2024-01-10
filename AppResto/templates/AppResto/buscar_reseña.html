@@ -42,23 +42,33 @@
 
     <form action="/AppResto/buscar_reseña/" method="GET">
 
-        Ingrese el nobre del Restaurante del que busca reseña: <input type="text" name="pedido" >
+        Ingrese el nobre del Restaurante del que busca reseña: <input type="text" list="opciones_restaurantes" name="pedido" >
+
+    
+        <datalist id="opciones_restaurantes">
+            {% for restaurante in nombres_restaurantes %}
+            <option value="{{ restaurante }}"></option>
+            {% endfor %}
+        </datalist>
 
         <input type="submit" value="Buscar">
 
     </form>
-    {% for x in resultado_busqueda %}
+    <div class="row justify-content-center">
+        <div class="col-xl-6">
+{% for x in resultado_busqueda %}
     <p><strong><font size= "5">Restaurante: {{x.restaurante}}</font size></strong></p>
-        <p>estrellas: {{x.estrellas}}</p>
-        <p>ubicacion: {{x.ubicacion}}</p>
-        <p>Puntuacion: {{x.puntuacion}}</p>
-        <p>fecha de visita: {{x.fecha_de_visita}}</p>
-        <p>fecha de reseña: {{x.fecha_de_reseña}}</p>
-        
-        <p> </p>
-        <p> </p>
-        <p> </p>
-        {% endfor %}
-</body>
-</html>
+    <p>Reseña: {{x.reseña}}</p>
+    <p>puntuacion: {{x.puntuacion}}</p>
+    <p>ubicacion: {{x.ubicacion}}</p>
+    <p>Puntuacion: {{x.puntuacion}}</p>
+    <p>fecha de visita: {{x.fecha_de_visita}}</p>
+    <p>fecha de reseña: {{x.fecha_de_reseña}}</p>
+    <p> </p>
+    <p> </p>
+    <p> </p>
+{% endfor %}
+
+ </div>
+ </div>
 

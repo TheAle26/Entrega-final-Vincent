@@ -14,4 +14,7 @@ urlpatterns=[
     path('buscar_restaurante/',views.buscar_restaurante,name='buscar_restaurante'),
     path('buscar_reseña/',views.buscar_reseña,name='buscar_reseña'),
 
+    #para actualizar
+    path('Actualizar_Restaurante/<restaurante>',views.Actualizar_Restaurante,name='Actualizar_Restaurante'),
+
 ]
