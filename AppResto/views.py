@@ -175,7 +175,7 @@ def update_Restaurante(request, restaurante_id):
 
             return render(request, "AppResto/restaurantes.html", {"restaurantes":restaurantes})
     else:
-        formulario = AppResto.forms.Reseña_form(initial={
+        formulario = AppResto.forms.Restaurante_form(initial={
             "nombre": restaurante_update.nombre,
             "reseñas": restaurante_update.reseñas,
             "descripcion": restaurante_update.descripcion,
@@ -189,7 +189,7 @@ def update_Restaurante(request, restaurante_id):
 
 def select_Restaurante(request):
     restaurantes = Restaurante.objects.all()
-    return render(request, "AppResto/select_restaurantes.html", {"restaurantes":restaurantes})
+    return render(request, "AppResto/select_restaurante.html", {"restaurantes":restaurantes})
     
     
 #borrar 
@@ -209,7 +209,7 @@ def delete_Restaurante(request, restaurante_id):
 
     # Recargar la lista de reseñas después de la eliminación
     restaurantes = Restaurante.objects.all()
-    return render(request, "AppResto/restaurante.html", {"restaurantes": restaurantes})
+    return render(request, "AppResto/restaurantes.html", {"restaurantes": restaurantes})
 
 
 
