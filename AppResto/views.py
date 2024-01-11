@@ -34,7 +34,6 @@ def Reseñas(request):
     return render(request,"AppResto/reseñas.html",{"reseñas":reseñas})
 
 
-
 def Crear_Reseñas(request):
 
     
@@ -98,7 +97,7 @@ def buscar_restaurante(request):
         return render(request, "AppResto/buscar_restaurante.html", {"resultado_busqueda": resultado_busqueda,"nombres_restaurantes":nombres_restaurantes})
     else:
         return render(request, "AppResto/buscar_restaurante.html",{"nombres_restaurantes":nombres_restaurantes})
-    
+  
 
 def buscar_reseña(request):
 
@@ -112,8 +111,6 @@ def buscar_reseña(request):
     else:
         return render(request, "AppResto/buscar_reseña.html",{"nombres_restaurantes":nombres_restaurantes})
     
-
-
 #aca para update
 
 def update_Reseña(request, reseña_id):
@@ -159,7 +156,7 @@ def update_Restaurante(request, restaurante_id):
     restaurante_update = get_object_or_404(Restaurante, id=restaurante_id)
 
     if request.method == "POST":
-        formulario = AppResto.forms.Reseña_form(request.POST)
+        formulario = AppResto.forms.Restaurante_form(request.POST)
         if formulario.is_valid():  # Asegúrate de agregar los paréntesis aquí
             info = formulario.cleaned_data
 
@@ -191,9 +188,7 @@ def select_Restaurante(request):
     restaurantes = Restaurante.objects.all()
     return render(request, "AppResto/select_restaurante.html", {"restaurantes":restaurantes})
     
-    
-#borrar 
-
+#para borrar 
 
 def delete_Reseña(request, reseña_id):
     reseña = get_object_or_404(Reseña, id=reseña_id)
