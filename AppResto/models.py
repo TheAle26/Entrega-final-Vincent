@@ -14,7 +14,7 @@ class Restaurante(models.Model):
     descripcion = models.CharField(max_length=250)
     ubicacion=models.CharField(max_length=99)
     instagram = models.URLField()
-    #foto=models.ImageField()
+    foto = models.ImageField(upload_to='AppResto/img/')
 
     def __str__(self):
         return self.nombre
@@ -29,7 +29,7 @@ class Reseña(models.Model):
     fecha_de_visita = models.DateField()
     fecha_de_reseña = models.DateField()
     reseña=models.CharField(max_length=150)
-    #foto=models.ImageField()
+    foto = models.ImageField(upload_to='AppResto/img/')
 
     def __str__(self):
-        return f"Reseña de {self.nombre}"
+        return f"Reseña de {self.restaurante}"

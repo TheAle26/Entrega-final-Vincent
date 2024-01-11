@@ -10,7 +10,7 @@
     <a class="bootstrap-icons" href="{% url 'Restos' %}">Salir</a>
     <h1>Actualizar  Restaurante</h1>
 
-    <form action="" method="post"> {% csrf_token %}
+    <form action="" method="post" enctype="multipart/form-data"> {% csrf_token %}
 
         {{mi_formu.as_p}}
 

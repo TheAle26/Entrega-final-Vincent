@@ -1,8 +1,9 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from AppResto.models import Restaurante, Reseña
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseBadRequest
 import datetime
 import AppResto.forms 
+
 
 # Create your views here.
 #from django.forms import CartAddProductForm
@@ -35,55 +36,66 @@ def Reseñas(request):
 
 
 def Crear_Reseñas(request):
+    if request.method == "POST":
+        formulario = AppResto.forms.Reseña_form(request.POST, request.FILES)
 
-    
+        if formulario.is_valid():
+            # Extraemos los datos del formulario
+            info = formulario.cleaned_data
 
-    if request.method== "POST":
-
-        formulario= AppResto.forms.Reseña_form(request.POST) #obtiene del formulario
-        print(formulario)
-
-        if formulario.is_valid:
-            info=formulario.cleaned_data
-            reseña_nuevo=Reseña(
+            # Creamos una instancia de reseña y asignamos los valores !!!
+            reseña_nuevo = Reseña(
                 restaurante=info["restaurante"],
                 puntuacion=info["puntuacion"],
                 ubicacion=info["ubicacion"],
                 fecha_de_visita=info["fecha_de_visita"],
-                fecha_de_reseña= datetime.datetime.now(),
-                reseña=info["reseña"]
-                #foto=info["foto"],
+                fecha_de_reseña = datetime.datetime.now(),
+                reseña=info["reseña"],
+                foto=info["foto"],
             )
+
+            # Guardamos la instancia del restaurante
             reseña_nuevo.save()
-            reseñas=Reseña.objects.all()
-            return render(request,"AppResto/reseñas.html",{"reseñas":reseñas})
+
+            # Recargamos la lista de restaurantes después de la creación
+            reseñas = Reseña.objects.all()
+
+            return render(request, "AppResto/reseñas.html", {"reseñas": reseñas})
     else:
-        formulario= AppResto.forms.Reseña_form()
-        return render(request,"AppResto/crear_reseña.html",{"mi_formu":formulario}) 
+        formulario = AppResto.forms.Reseña_form()
+
+        return render(request, "AppResto/crear_reseña.html", {"mi_formu": formulario})
+    return render(request, "AppResto/inicio.html", {"mi_formu": formulario})
     
 def Crear_Restaurante(request):
+    if request.method == "POST":
+        formulario = AppResto.forms.Restaurante_form(request.POST, request.FILES)
 
-    if request.method== "POST":
+        if formulario.is_valid():
+            # Extraemos los datos del formulario
+            info = formulario.cleaned_data
 
-        formulario= AppResto.forms.Restaurante_form(request.POST) #obtiene del formulario
-        print(formulario)
-
-        if formulario.is_valid:
-            info=formulario.cleaned_data
-            resto_nuevo=Restaurante(
+            # Creamos una instancia de Restaurante y asignamos los valores
+            resto_nuevo = Restaurante(
                 nombre=info["nombre"],
                 reseñas=info["reseñas"],
                 descripcion=info["descripcion"],
                 ubicacion=info["ubicacion"],
                 instagram=info["instagram"],
-                #foto=info["foto"],
+                foto=info["foto"],
             )
+
+            # Guardamos la instancia del restaurante
             resto_nuevo.save()
-            restaurantes=Restaurante.objects.all()
-            return render(request,"AppResto/restaurantes.html",{"restaurantes":restaurantes})
+
+            # Recargamos la lista de restaurantes después de la creación
+            restaurantes = Restaurante.objects.all()
+
+            return render(request, "AppResto/restaurantes.html", {"restaurantes": restaurantes})
     else:
-        formulario= AppResto.forms.Restaurante_form()
-        return render(request,"AppResto/crear_resto.html",{"mi_formu":formulario})
+        formulario = AppResto.forms.Restaurante_form()
+
+        return render(request, "AppResto/crear_resto.html", {"mi_formu": formulario})
     
 
 def buscar_restaurante(request):
@@ -113,12 +125,14 @@ def buscar_reseña(request):
     
 #aca para update
 
+from django.http import HttpResponseBadRequest  # Importa la clase HttpResponseBadRequest
+
 def update_Reseña(request, reseña_id):
     reseña_update = get_object_or_404(Reseña, id=reseña_id)
 
     if request.method == "POST":
         formulario = AppResto.forms.Reseña_form(request.POST)
-        if formulario.is_valid():  # Asegúrate de agregar los paréntesis aquí
+        if formulario.is_valid():
             info = formulario.cleaned_data
 
             restaurante_nombre = info["restaurante"].nombre
@@ -130,10 +144,18 @@ def update_Reseña(request, reseña_id):
             reseña_update.fecha_de_reseña = datetime.datetime.now()
             reseña_update.reseña = info["reseña"]
 
+            foto = request.FILES.get('foto')
+            if foto:
+                reseña_update.foto = foto
+
             reseña_update.save()
             reseñas = Reseña.objects.all()
 
             return render(request, "AppResto/reseñas.html", {"reseñas": reseñas})
+        else:
+            # Manejar el caso en que el formulario no es válido
+            print(formulario.errors)
+            return HttpResponseBadRequest("El formulario no es válido. Revise los datos proporcionados.")
     else:
         formulario = AppResto.forms.Reseña_form(initial={
             "restaurante": reseña_update.restaurante,
@@ -156,21 +178,27 @@ def update_Restaurante(request, restaurante_id):
     restaurante_update = get_object_or_404(Restaurante, id=restaurante_id)
 
     if request.method == "POST":
-        formulario = AppResto.forms.Restaurante_form(request.POST)
-        if formulario.is_valid():  # Asegúrate de agregar los paréntesis aquí
+        formulario = AppResto.forms.Restaurante_form(request.POST, request.FILES)
+        if formulario.is_valid():
             info = formulario.cleaned_data
 
-        
             restaurante_update.nombre = info["nombre"]
             restaurante_update.reseñas = info["reseñas"]
             restaurante_update.descripcion = info["descripcion"]
             restaurante_update.instagram = info["instagram"]
             restaurante_update.ubicacion = info["ubicacion"]
+            
+            # Actualizamos la foto solo si se proporciona una nueva
+            foto = request.FILES.get('foto')
+            if foto:
+                restaurante_update.foto = foto
 
             restaurante_update.save()
+            
+            # Recargamos la lista de restaurantes después de la actualización
             restaurantes = Restaurante.objects.all()
 
-            return render(request, "AppResto/restaurantes.html", {"restaurantes":restaurantes})
+            return render(request, "AppResto/restaurantes.html", {"restaurantes": restaurantes})
     else:
         formulario = AppResto.forms.Restaurante_form(initial={
             "nombre": restaurante_update.nombre,
@@ -178,11 +206,10 @@ def update_Restaurante(request, restaurante_id):
             "descripcion": restaurante_update.descripcion,
             "instagram": restaurante_update.instagram,
             "ubicacion": restaurante_update.ubicacion,
-            
+            # No incluimos la foto aquí, ya que se manejará en el formulario de POST
         })
 
-        return render(request, "AppResto/update_restaurante.html", {"mi_formu": formulario})
-
+    return render(request, "AppResto/update_restaurante.html", {"mi_formu": formulario})
 
 def select_Restaurante(request):
     restaurantes = Restaurante.objects.all()

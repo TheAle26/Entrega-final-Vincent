@@ -11366,3 +11366,33 @@ footer.footer {
   padding-top: 4rem;
   padding-bottom: 4rem;
 }
+
+/* Estilos para el espaciado entre restaurantes */
+.restaurant-item {
+  margin-bottom: 20px;  /* Ajusta el valor según sea necesario */
+}
+
+/* Estilos para centrar y espaciar */
+.col-centered {
+  display: inline-block;
+  float: none;
+  margin-right: -4px;  /* Corrige el espacio adicional que pueda generar */
+}
+
+/* Estilos para las imágenes */
+.restaurant-image {
+  width: 100%;  /* Haz que las imágenes ocupen el 100% del contenedor */
+  height: auto;  /* Ajusta la altura automáticamente */
+}
+
+/* Estilos para el texto */
+.restaurant-text {
+  text-align: left;  /* Ajusta según sea necesario */
+}
+
+/* Otros estilos que ya puedas tener en tu archivo */
+/* ... */
+.my-restaurant-image {
+  margin-right: 10px; /* Puedes ajustar este valor según tus necesidades */
+}
+
