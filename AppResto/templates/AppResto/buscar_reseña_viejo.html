@@ -1,0 +1,74 @@
+
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        {% load static %}
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Landing Page - Start Bootstrap Theme</title>
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <!-- Bootstrap icons-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" type="text/css" />
+        <!-- Google fonts-->
+        <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="{% static 'AppResto/css/styles.css' %}"rel="stylesheet" />
+    </head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscar Reseña</title>
+</head>
+<body>
+    <nav class="navbar navbar-light bg-light static-top">
+        <div class="container">
+    
+            <a class="btn btn-secondary" href="{% url 'inicio' %}">Inicio</a>
+            <a class="navbar-brand" href="{% url 'reseñas' %}">Ver Todas</a>
+            <a class="navbar-brand" href="{% url 'crear_reseña' %}">Agregar Reseña</a>
+            <!-- poner que si inicie sesion aparezca mi nombre-->
+            <a class="navbar-brand" href="{% url 'usuario' %}">Mi Nombre</a>
+            <a class="btn btn-primary" href="{% url 'iniciar_sesion' %}">Iniciar Sesion</a>
+            </div>
+           
+        </div>
+    </nav> 
+</body>
+<body>
+    <h1>Buscar Reseña</h1>
+
+    <form action="/AppResto/buscar_reseña/" method="GET">
+
+        Ingrese el nobre del Restaurante del que busca reseña: <input type="text" list="opciones_restaurantes" name="pedido" >
+
+    
+        <datalist id="opciones_restaurantes">
+            {% for restaurante in nombres_restaurantes %}
+            <option value="{{ restaurante }}"></option>
+            {% endfor %}
+        </datalist>
+
+        <input type="submit" value="Buscar">
+
+    </form>
+    <div class="row justify-content-center">
+        <div class="col-xl-6">
+{% for x in resultado_busqueda %}
+    <p><strong><font size= "5">Restaurante: {{x.restaurante}}</font size></strong></p>
+    <p>Reseña: {{x.reseña}}</p>
+    <p>puntuacion: {{x.puntuacion}}</p>
+    <p>ubicacion: {{x.ubicacion}}</p>
+    <p>Puntuacion: {{x.puntuacion}}</p>
+    <p>fecha de visita: {{x.fecha_de_visita}}</p>
+    <p>fecha de reseña: {{x.fecha_de_reseña}}</p>
+    <p> </p>
+    <p> </p>
+    <p> </p>
+{% endfor %}
+
+ </div>
+ </div>
+
