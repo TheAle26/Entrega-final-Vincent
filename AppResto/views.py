@@ -3,8 +3,8 @@ from AppResto.models import Restaurante, Reseña
 from django.http import HttpResponse, HttpResponseBadRequest
 import datetime
 import AppResto.forms 
-
-
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth import login, authenticate, logout
 # Create your views here.
 #from django.forms import CartAddProductForm
 # Create your views here.
@@ -125,7 +125,6 @@ def buscar_reseña(request):
     
 #aca para update
 
-from django.http import HttpResponseBadRequest  # Importa la clase HttpResponseBadRequest
 
 def update_Reseña(request, reseña_id):
     reseña_update = get_object_or_404(Reseña, id=reseña_id)
@@ -234,5 +233,88 @@ def delete_Restaurante(request, restaurante_id):
     return render(request, "AppResto/restaurantes.html", {"restaurantes": restaurantes})
 
 
+#login y logout
 
 
+
+'''
+def login(request):
+    if request.method == 'POST':
+        formulario = AuthenticationForm(request.POST)
+        if formulario.is_valid():
+            user = formulario.save()
+            authenticated_user = authenticate(username=user.username, password=request.POST['password1'])
+
+            if authenticated_user is not None:
+                login(request, authenticated_user)
+                return redirect('inicio')  # Redirect to the appropriate URL after login
+            else:
+                mensaje = "Credenciales incorrectas"
+        else:
+            mensaje = "Credenciales incorrectas"
+    else:
+        formulario = AuthenticationForm()
+        mensaje = ""
+
+    return render(request, "registro/login.html", {"formulario": formulario, 'mensaje': mensaje})
+
+'''
+def register(request):
+    if request.method == 'POST':
+        formulario = UserCreationForm(request.POST)
+
+        if formulario.is_valid():
+            user = formulario.save()
+            authenticated_user = authenticate(username=user.username, password=request.POST['password1'])
+
+            if authenticated_user is not None:
+                login(request, authenticated_user)
+                return redirect('inicio')  # Redirect to the appropriate URL after registration
+
+    else:
+        formulario = UserCreationForm()
+
+    return render(request, "registro/register.html", {"formulario": formulario})
+
+
+def login_request(request):
+    if request.method == 'POST':
+        form = AuthenticationForm(request, data = request.POST)
+
+        if form.is_valid():  # Si pasó la validación de Django
+
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+
+            user = authenticate(username= username, password=password)
+
+            if user is not None:
+                login(request, user)
+
+                return render(request, "AppResto/inicio.html", {'mensaje':f'Bienvenido al sitio {username}!'})
+            else:
+                return render(request, "registro/login.html", {"mensaje":"Datos incorrectos"})
+           
+        else:
+            formulario = AuthenticationForm()
+            return render(request, "registro/login.html", {"mensaje":"Formulario erroneo","formulario": formulario})
+
+    formulario = AuthenticationForm()
+
+    return render(request, "registro/login.html", {"formulario": formulario})
+
+'''
+def regiser(request):
+    if request.method=='POST':
+
+        formulario=UserCreationForm(request.POST)
+
+        if formulario.is_valid():
+            username=formulario.cleaned_data['username']
+            formulario.save()
+            return render(request,'AppResto/inicio.html',{'mensaje':f'Bienvenido al sitio f{username}!'})
+    
+    else:
+        formulario=UserCreationForm()
+    return render (request,"registro/register.html",{"formulario":formulario})
+    '''

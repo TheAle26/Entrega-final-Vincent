@@ -1,0 +1,32 @@
+{% extends 'AppResto/padre.html' %}
+{% load static %}
+
+{% block tituloGrande %}
+<h1 class="mb-5"> Bienvenido devuelta!
+</h1>
+ 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inice sesion</title>
+</head>
+<body>
+    {{mensaje}}
+    <form action="" method="post" > {% csrf_token %}
+
+       
+        {{ formulario.as_p }}
+
+        <input type="submit" value="Iniciar sesion">
+    </form>
+    <a class="btn btn-secondary" href="{% url 'register' %}">No tienes una cuenta? Unete aqui!</a>
+{% endblock %}
+
+{% block botones %}
+
+<a class="navbar-brand" href="{% url 'Restos' %}">Restaurantes</a>
+<a class="navbar-brand" href="{% url 'reseñas' %}">Reseñas</a>
+<!-- poner que si inicie sesion aparezca mi nombre-->
+<a class="btn btn-primary" href="{% url 'usuario' %}">Mi Nombre</a>
+<a class="btn btn-primary" href="{% url 'inicio' %}">Inicio</a>
+{% endblock %}

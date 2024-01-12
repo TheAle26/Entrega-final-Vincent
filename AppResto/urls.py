@@ -2,12 +2,14 @@ from django.urls import path
 from AppResto import views
 
 urlpatterns=[
+
+    path('login/',views.login_request,name='iniciar_sesion'),
+    path('register/',views.register,name='register'),
     path('inicio/',views.inicio,name="inicio"),
     path('restaurantes/',views.Restaurantes,name="Restos"),
     path('crear_restaurante/',views.Crear_Restaurante, name="crear_restaurante"),  #nuevos datos
     path('crear_reseña/',views.Crear_Reseñas, name="crear_reseña"), #nuevos datos
     path('reseñas/',views.Reseñas,name="reseñas"),
-    path('iniciar_sesion/',views.iniciar_sesion, name="iniciar_sesion"),
     path('usuario/',views.mi_usuario, name="usuario"),
     
     #ahora para buscar, me gustaria integrar
