@@ -25,6 +25,14 @@
                 {% block botones %}
 
                 {% endblock %}
+                {% if request.path == '/AppResto/user/' %}
+                <a class="btn btn-outline-danger "href="{% url 'user' %}">Logout</a>
+                {% elif user.is_authenticated %}
+                <a class="btn btn-outline-success" href="{% url 'user' %}"> {{ request.user.username }}</a>
+{% else %}
+    <a class="btn btn-primary" href="{% url 'iniciar_sesion' %}">Iniciar Sesion</a>
+    
+{% endif %}
                 </div>
                
             </div>

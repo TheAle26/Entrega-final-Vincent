@@ -1,7 +1,7 @@
-{% extends 'AppResto/padre.html' %}
+{% extends 'AppResto/herencia.html' %}
 {% load static %}
 
-{% block tituloGrande %}
+{% block muestra %}
 <h1 class="mb-5"> Hola, bienvenido al sitio!
 </h1>
  
@@ -26,7 +26,4 @@
 
 <a class="navbar-brand" href="{% url 'Restos' %}">Restaurantes</a>
 <a class="navbar-brand" href="{% url 'reseñas' %}">Reseñas</a>
-<!-- poner que si inicie sesion aparezca mi nombre-->
-<a class="btn btn-primary" href="{% url 'usuario' %}">Mi Nombre</a>
-<a class="btn btn-primary" href="{% url 'iniciar_sesion' %}">Iniciar Sesion</a>
 {% endblock %}

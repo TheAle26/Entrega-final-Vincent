@@ -12,14 +12,13 @@ from django.contrib.auth import login, authenticate, logout
 def prueba(request):
     return render(request,"AppResto/prueba.html")
 
-def inicio(request):
-    return render(request,"AppResto/inicio.html")
+
 
 def iniciar_sesion(request):
     return render(request,"AppResto/iniciar_sesion.html")
 
 def mi_usuario(request):
-    return render(request,"AppResto/usuario.html")
+    return render(request,"AppResto/user.html")
 
 def crear_usuario(request):
     return render(request,"AppResto/crear_usuario.html")
@@ -265,11 +264,11 @@ def register(request):
 
         if formulario.is_valid():
             user = formulario.save()
-            authenticated_user = authenticate(username=user.username, password=request.POST['password1'])
+            authenticated_user = authenticate(username=user.username, password=request.POST['password1'],)
 
             if authenticated_user is not None:
                 login(request, authenticated_user)
-                return redirect('inicio')  # Redirect to the appropriate URL after registration
+                return render(request,'AppResto/inicio.html',{'mensaje':f'Bienvenido al sitio f{user}!'})  # Redirect to the appropriate URL after registration
 
     else:
         formulario = UserCreationForm()
@@ -290,7 +289,6 @@ def login_request(request):
 
             if user is not None:
                 login(request, user)
-
                 return render(request, "AppResto/inicio.html", {'mensaje':f'Bienvenido al sitio {username}!'})
             else:
                 return render(request, "registro/login.html", {"mensaje":"Datos incorrectos"})
@@ -318,3 +316,7 @@ def regiser(request):
         formulario=UserCreationForm()
     return render (request,"registro/register.html",{"formulario":formulario})
     '''
+
+def inicio(request):
+    
+    return render(request,"AppResto/inicio.html")

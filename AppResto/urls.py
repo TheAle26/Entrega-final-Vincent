@@ -10,7 +10,7 @@ urlpatterns=[
     path('crear_restaurante/',views.Crear_Restaurante, name="crear_restaurante"),  #nuevos datos
     path('crear_reseña/',views.Crear_Reseñas, name="crear_reseña"), #nuevos datos
     path('reseñas/',views.Reseñas,name="reseñas"),
-    path('usuario/',views.mi_usuario, name="usuario"),
+    path('user/',views.mi_usuario, name="user"),
     
     #ahora para buscar, me gustaria integrar
     path('buscar_restaurante/',views.buscar_restaurante,name='buscar_restaurante'),
