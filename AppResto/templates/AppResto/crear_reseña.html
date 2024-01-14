@@ -11,6 +11,7 @@
 
     <form action="" method="post" enctype="multipart/form-data"> {% csrf_token %}
         {{ mi_formu.as_p }}
+        {{mensaje}}
 
         <input type="submit" value="Guardar">
     </form>

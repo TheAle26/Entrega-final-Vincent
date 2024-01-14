@@ -59,12 +59,18 @@ def Crear_Reseñas(request):
             # Recargamos la lista de restaurantes después de la creación
             reseñas = Reseña.objects.all()
 
+          
             return render(request, "AppResto/reseñas.html", {"reseñas": reseñas})
+        else:
+            mensaje="Formulario no valido"
+            formulario = AppResto.forms.Reseña_form()
+            return render(request, "AppResto/crear_reseña.html", {"mi_formu": formulario,'mensaje':mensaje})
+
     else:
         formulario = AppResto.forms.Reseña_form()
 
         return render(request, "AppResto/crear_reseña.html", {"mi_formu": formulario})
-    return render(request, "AppResto/inicio.html", {"mi_formu": formulario})
+
     
 def Crear_Restaurante(request):
     if request.method == "POST":
@@ -77,7 +83,7 @@ def Crear_Restaurante(request):
             # Creamos una instancia de Restaurante y asignamos los valores
             resto_nuevo = Restaurante(
                 nombre=info["nombre"],
-                reseñas=info["reseñas"],
+                calificacion=info["calificacion"],
                 descripcion=info["descripcion"],
                 ubicacion=info["ubicacion"],
                 instagram=info["instagram"],
@@ -88,9 +94,9 @@ def Crear_Restaurante(request):
             resto_nuevo.save()
 
             # Recargamos la lista de restaurantes después de la creación
-            restaurantes = Restaurante.objects.all()
+            
 
-            return render(request, "AppResto/restaurantes.html", {"restaurantes": restaurantes})
+            return redirect('Restos') #Es el nombre de la view: name="nombre"
     else:
         formulario = AppResto.forms.Restaurante_form()
 
