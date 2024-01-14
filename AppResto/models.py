@@ -10,7 +10,7 @@ class Usuario(models.Model):
 
 class Restaurante(models.Model):
     nombre = models.CharField(max_length=99)
-    reseñas = models.FloatField() #quiero que sea el promedio de las reseñas hechas
+    calificacion = models.FloatField() #quiero que sea el promedio de las reseñas hechas
     descripcion = models.CharField(max_length=250)
     ubicacion=models.CharField(max_length=99)
     instagram = models.URLField()

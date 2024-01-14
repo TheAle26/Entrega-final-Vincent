@@ -181,7 +181,7 @@ def update_Restaurante(request, restaurante_id):
             info = formulario.cleaned_data
 
             restaurante_update.nombre = info["nombre"]
-            restaurante_update.reseñas = info["reseñas"]
+            restaurante_update.calificacion = info["calificacion"]
             restaurante_update.descripcion = info["descripcion"]
             restaurante_update.instagram = info["instagram"]
             restaurante_update.ubicacion = info["ubicacion"]

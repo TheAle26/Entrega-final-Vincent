@@ -3,7 +3,7 @@ from .models import Restaurante
 
 class Restaurante_form(forms.Form):
     nombre = forms.CharField(max_length=99)
-    reseñas = forms.FloatField(min_value=0,max_value=5) #quiero que sea el promedio de las reseñas hechas
+    calificacion = forms.FloatField(min_value=0,max_value=5) #quiero que sea el promedio de las reseñas hechas
     descripcion = forms.CharField(max_length=250)
     ubicacion=forms.CharField(max_length=99)
     instagram = forms.URLField()
