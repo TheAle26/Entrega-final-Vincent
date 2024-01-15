@@ -8,7 +8,9 @@
 </head>
 <body>
     {% for reseña in reseñas %}
-        <li><strong> <Hecha sobre Restaurante:</strong> {{ reseña.restaurante }} <strong></strong>Reseña:</strong> {{ reseña.reseña }} <strong>fecha de reseña:</strong> {{ reseña.fecha_de_reseña }} </li>
+        <p><strong>Hecha sobre Restaurante:</strong> {{ reseña.restaurante }}</p> 
+            <p><strong>Reseña:</strong> {{ reseña.reseña }}</p> 
+            <p><strong>Fecha de reseña:</strong> {{ reseña.fecha_de_reseña }}</p> 
         <form action="{% url 'update_reseña' reseña.id %}" method="get">
             <button type="submit">Editar</button>
         </form>

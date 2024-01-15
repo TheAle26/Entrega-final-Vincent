@@ -56,6 +56,7 @@ def Crear_Reseñas(request):
                 fecha_de_reseña = datetime.datetime.now(),
                 reseña=info["reseña"],
                 foto=info["foto"],
+                usuario=request.user,
             )
 
             # Guardamos la instancia del restaurante
@@ -91,6 +92,7 @@ def Crear_Restaurante(request):
                 ubicacion=info["ubicacion"],
                 instagram=info["instagram"],
                 foto=info["foto"],
+                usuario=request.user,
             )
 
             # Guardamos la instancia del restaurante
@@ -177,7 +179,7 @@ def update_Reseña(request, reseña_id):
 
 @login_required
 def select_Reseña(request):
-    Reseñas = Reseña.objects.all()
+    Reseñas = Reseña.objects.filter(usuario=request.user)
     return render(request, "AppResto/select_reseña.html", {"reseñas":Reseñas})
 
 @login_required
@@ -220,7 +222,7 @@ def update_Restaurante(request, restaurante_id):
 
 @login_required
 def select_Restaurante(request):
-    restaurantes = Restaurante.objects.all()
+    restaurantes = Restaurante.objects.filter(usuario=request.user)
     return render(request, "AppResto/select_restaurante.html", {"restaurantes":restaurantes})
     
 #para borrar 
@@ -245,7 +247,7 @@ def delete_Restaurante(request, restaurante_id):
 #login y logout
 def register(request):
     if request.method == 'POST':
-        formulario = AppResto.forms.UserRegisterForm(request.POST)
+        formulario = AppResto.forms.UserCreationForm(request.POST)
 
         if formulario.is_valid():
             user = formulario.save()

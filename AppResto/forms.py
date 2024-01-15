@@ -33,7 +33,7 @@ class Reseña_form(forms.Form):
             pass
         return foto
 
-
+"""
 class UserRegisterForm(UserCreationForm):
     email = forms.EmailField()
     password1 = forms.CharField(label="Contraseña", widget=forms.PasswordInput)
@@ -45,3 +45,4 @@ class UserRegisterForm(UserCreationForm):
         # Saca los mensajes de ayuda
         help_texts = {k:"" for k in fields}
 
+"""

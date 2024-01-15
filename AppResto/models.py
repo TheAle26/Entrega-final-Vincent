@@ -1,11 +1,8 @@
 from django.db import models
-
+from django.contrib.auth.models import User 
 # Create your models here.
 
-class Usuario(models.Model):
-    usuario = models.CharField(max_length=99)
-    password = models.CharField(max_length=20)
-    email = models.EmailField()
+
 
 class Restaurante(models.Model):
     nombre = models.CharField(max_length=99)
@@ -14,6 +11,7 @@ class Restaurante(models.Model):
     ubicacion=models.CharField(max_length=99)
     instagram = models.URLField()
     foto = models.ImageField(upload_to='AppResto/img/')
+    usuario=models.CharField(max_length=150)
 
     def __str__(self):
         return self.nombre
@@ -29,6 +27,12 @@ class Reseña(models.Model):
     fecha_de_reseña = models.DateField()
     reseña=models.CharField(max_length=150)
     foto = models.ImageField(upload_to='AppResto/img/')
+    usuario=models.CharField(max_length=150)
 
     def __str__(self):
         return f"Reseña de {self.restaurante}"
+    
+class Usuario(models.Model):
+    usuario = models.CharField(max_length=99)
+    password = models.CharField(max_length=20)
+    email = models.EmailField()

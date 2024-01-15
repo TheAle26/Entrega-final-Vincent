@@ -8,7 +8,9 @@
 </head>
 <body>
     {% for restaurante in restaurantes %}
-        <li><strong> <Nombre:</strong> {{ restaurante.nombre }} <strong>instagram:</strong> {{ restaurante.instagram }} <strong>Reseñas:</strong> {{ restaurante.reseñas }} </li>
+        <p><strong>Nombre:</strong> {{ restaurante.nombre }}</p>
+            <p><strong>instagram:</strong> {{ restaurante.instagram }} </p>
+             <p><strong>Reseñas:</strong> {{ restaurante.reseñas }} </p>
         <form action="{% url 'update_restaurante' restaurante.id %}" method="get">
             <button type="submit">Editar</button>
         </form>
