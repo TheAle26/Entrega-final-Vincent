@@ -5,6 +5,7 @@ import datetime
 import AppResto.forms 
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 #from django.forms import CartAddProductForm
 # Create your views here.
@@ -12,6 +13,9 @@ from django.contrib.auth import login, authenticate, logout
 def prueba(request):
     return render(request,"AppResto/prueba.html")
 
+def inicio(request):
+    
+    return render(request,"AppResto/inicio.html")
 
 
 def iniciar_sesion(request):
@@ -20,6 +24,7 @@ def iniciar_sesion(request):
 def mi_usuario(request):
     return render(request,"AppResto/user.html")
 
+@login_required
 def crear_usuario(request):
     return render(request,"AppResto/crear_usuario.html")
 
@@ -33,7 +38,7 @@ def Reseñas(request):
     reseñas=Reseña.objects.all()
     return render(request,"AppResto/reseñas.html",{"reseñas":reseñas})
 
-
+@login_required
 def Crear_Reseñas(request):
     if request.method == "POST":
         formulario = AppResto.forms.Reseña_form(request.POST, request.FILES)
@@ -57,10 +62,8 @@ def Crear_Reseñas(request):
             reseña_nuevo.save()
 
             # Recargamos la lista de restaurantes después de la creación
-            reseñas = Reseña.objects.all()
-
           
-            return render(request, "AppResto/reseñas.html", {"reseñas": reseñas})
+            return redirect('reseñas')
         else:
             mensaje="Formulario no valido"
             formulario = AppResto.forms.Reseña_form()
@@ -71,7 +74,7 @@ def Crear_Reseñas(request):
 
         return render(request, "AppResto/crear_reseña.html", {"mi_formu": formulario})
 
-    
+@login_required    
 def Crear_Restaurante(request):
     if request.method == "POST":
         formulario = AppResto.forms.Restaurante_form(request.POST, request.FILES)
@@ -130,7 +133,7 @@ def buscar_reseña(request):
     
 #aca para update
 
-
+@login_required
 def update_Reseña(request, reseña_id):
     reseña_update = get_object_or_404(Reseña, id=reseña_id)
 
@@ -155,7 +158,7 @@ def update_Reseña(request, reseña_id):
             reseña_update.save()
             reseñas = Reseña.objects.all()
 
-            return render(request, "AppResto/reseñas.html", {"reseñas": reseñas})
+            return redirect('reseñas')
         else:
             # Manejar el caso en que el formulario no es válido
             print(formulario.errors)
@@ -172,12 +175,12 @@ def update_Reseña(request, reseña_id):
 
         return render(request, "AppResto/update_reseña.html", {"mi_formu": formulario})
 
-
+@login_required
 def select_Reseña(request):
     Reseñas = Reseña.objects.all()
     return render(request, "AppResto/select_reseña.html", {"reseñas":Reseñas})
 
-
+@login_required
 def update_Restaurante(request, restaurante_id):
     restaurante_update = get_object_or_404(Restaurante, id=restaurante_id)
 
@@ -199,10 +202,9 @@ def update_Restaurante(request, restaurante_id):
 
             restaurante_update.save()
             
-            # Recargamos la lista de restaurantes después de la actualización
-            restaurantes = Restaurante.objects.all()
+            # Recargamos la lista de restaurantes después de la actualizació
 
-            return render(request, "AppResto/restaurantes.html", {"restaurantes": restaurantes})
+            return redirect('Restos')
     else:
         formulario = AppResto.forms.Restaurante_form(initial={
             "nombre": restaurante_update.nombre,
@@ -210,63 +212,40 @@ def update_Restaurante(request, restaurante_id):
             "descripcion": restaurante_update.descripcion,
             "instagram": restaurante_update.instagram,
             "ubicacion": restaurante_update.ubicacion,
+            
             # No incluimos la foto aquí, ya que se manejará en el formulario de POST
         })
 
     return render(request, "AppResto/update_restaurante.html", {"mi_formu": formulario})
 
+@login_required
 def select_Restaurante(request):
     restaurantes = Restaurante.objects.all()
     return render(request, "AppResto/select_restaurante.html", {"restaurantes":restaurantes})
     
 #para borrar 
-
+@login_required
 def delete_Reseña(request, reseña_id):
     reseña = get_object_or_404(Reseña, id=reseña_id)
     reseña.delete()
 
     # Recargar la lista de reseñas después de la eliminación
     reseñas = Reseña.objects.all()
-    return render(request, "AppResto/reseñas.html", {"reseñas": reseñas})
+    return redirect('reseñas')
 
+@login_required
 def delete_Restaurante(request, restaurante_id):
     restaurante = get_object_or_404(Restaurante, id=restaurante_id)
     restaurante.delete()
 
     # Recargar la lista de reseñas después de la eliminación
     restaurantes = Restaurante.objects.all()
-    return render(request, "AppResto/restaurantes.html", {"restaurantes": restaurantes})
-
+    return redirect('restaurantes')
 
 #login y logout
-
-
-
-'''
-def login(request):
-    if request.method == 'POST':
-        formulario = AuthenticationForm(request.POST)
-        if formulario.is_valid():
-            user = formulario.save()
-            authenticated_user = authenticate(username=user.username, password=request.POST['password1'])
-
-            if authenticated_user is not None:
-                login(request, authenticated_user)
-                return redirect('inicio')  # Redirect to the appropriate URL after login
-            else:
-                mensaje = "Credenciales incorrectas"
-        else:
-            mensaje = "Credenciales incorrectas"
-    else:
-        formulario = AuthenticationForm()
-        mensaje = ""
-
-    return render(request, "registro/login.html", {"formulario": formulario, 'mensaje': mensaje})
-
-'''
 def register(request):
     if request.method == 'POST':
-        formulario = UserCreationForm(request.POST)
+        formulario = AppResto.forms.UserRegisterForm(request.POST)
 
         if formulario.is_valid():
             user = formulario.save()
@@ -307,22 +286,3 @@ def login_request(request):
 
     return render(request, "registro/login.html", {"formulario": formulario})
 
-'''
-def regiser(request):
-    if request.method=='POST':
-
-        formulario=UserCreationForm(request.POST)
-
-        if formulario.is_valid():
-            username=formulario.cleaned_data['username']
-            formulario.save()
-            return render(request,'AppResto/inicio.html',{'mensaje':f'Bienvenido al sitio f{username}!'})
-    
-    else:
-        formulario=UserCreationForm()
-    return render (request,"registro/register.html",{"formulario":formulario})
-    '''
-
-def inicio(request):
-    
-    return render(request,"AppResto/inicio.html")

@@ -1,5 +1,6 @@
 from django.urls import path
 from AppResto import views
+from django.contrib.auth.views import LogoutView
 
 urlpatterns=[
 
@@ -29,5 +30,5 @@ urlpatterns=[
     path('delete_reseña/<int:reseña_id>/', views.delete_Reseña, name='delete_reseña'),
     #prueba
     path('prueba/', views.prueba, name='prueba'),
-    
+    path('logout/', LogoutView.as_view(template_name='registro/logout.html'), name='logout'),
 ]

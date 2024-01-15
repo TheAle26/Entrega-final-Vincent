@@ -6,7 +6,6 @@ class Usuario(models.Model):
     usuario = models.CharField(max_length=99)
     password = models.CharField(max_length=20)
     email = models.EmailField()
-    reseñas=models.CharField(max_length=99)
 
 class Restaurante(models.Model):
     nombre = models.CharField(max_length=99)

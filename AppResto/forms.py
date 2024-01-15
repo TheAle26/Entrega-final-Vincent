@@ -1,5 +1,7 @@
-from django import forms
-from .models import Restaurante
+from django import forms 
+from .models import Restaurante, Usuario
+from django.contrib.auth.forms import UserCreationForm
+
 
 class Restaurante_form(forms.Form):
     nombre = forms.CharField(max_length=99)
@@ -30,4 +32,16 @@ class Reseña_form(forms.Form):
             # Aquí puedes agregar validaciones adicionales para la imagen si es necesario
             pass
         return foto
+
+
+class UserRegisterForm(UserCreationForm):
+    email = forms.EmailField()
+    password1 = forms.CharField(label="Contraseña", widget=forms.PasswordInput)
+    password2 = forms.CharField(label="Repetir contraseña", widget=forms.PasswordInput)
+ 
+    class Meta:
+        model = Usuario
+        fields = ['usuario', 'email', 'password1', 'password2']
+        # Saca los mensajes de ayuda
+        help_texts = {k:"" for k in fields}
 
