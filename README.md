@@ -1,4 +1,3 @@
-Buenas tardes profesor, la idea del proyecto es que se puedan cargar restaurantes y despues crear reseñas sobre estos. logre que al crear reseñas se tenga que hacer si o si sobre un restaurante que se haga. hice de mas en el proyecto por lo que en esta entrega va  haber mas avance que el que pide la entrega. 
-Si te fijas, la clase Restaurante tiene el atributo Foto como comentario, esta asi en models, forms y views. cuando le saco el comentario y lo actualizo a la base de datos, al hacer el formulario y tocar guardar, me sale error y no logro resolverlo. al hacer eso voy a modificar la estetica de la pagina para que aparezcan las fotos del restaurante a la izquierda del texto.
+Hola profesor, buenas tardes. segui avanzado con el curso y esto es lo que voy de la entrega final. veras que hay muchos git push. eso es porque voy trabajando en distintas computadoras, por las dudas cuando termino un cambio hago un git add git commit y git push. 
 
 La Pagina es AppResto/Inicio, y desde ahi podes ir a todos lados. Saludos, Alejo.
