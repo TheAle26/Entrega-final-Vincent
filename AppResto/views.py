@@ -21,15 +21,17 @@ def inicio(request):
 def iniciar_sesion(request):
     return render(request,"AppResto/iniciar_sesion.html")
 
+@login_required
 def mi_usuario(request):
-    return render(request,"AppResto/user.html")
+    restaurantes = Restaurante.objects.filter(usuario=request.user)
+    Reseñas = Reseña.objects.filter(usuario=request.user)
+    return render(request,"AppResto/user.html",{'reseñas':Reseñas,'restaurantes':restaurantes})
 
 @login_required
 def crear_usuario(request):
     return render(request,"AppResto/crear_usuario.html")
 
 def Restaurantes(request):
-
     restaurantes=Restaurante.objects.all()
     return render(request,"AppResto/restaurantes.html",{"restaurantes":restaurantes})
 
@@ -127,7 +129,8 @@ def buscar_reseña(request):
 
     if request.method == 'GET' and 'pedido' in request.GET:
         restaurante_pedido = request.GET['pedido']
-        resultado_busqueda = Reseña.objects.filter(restaurante__icontains=restaurante_pedido)
+        resultado_busqueda = Reseña.objects.filter(restaurante__nombre__icontains=restaurante_pedido)
+
         
         return render(request, "AppResto/buscar_reseña.html", {"resultado_busqueda": resultado_busqueda,"nombres_restaurantes":nombres_restaurantes})
     else:
@@ -210,7 +213,7 @@ def update_Restaurante(request, restaurante_id):
     else:
         formulario = AppResto.forms.Restaurante_form(initial={
             "nombre": restaurante_update.nombre,
-            "reseñas": restaurante_update.reseñas,
+            "calificacion": restaurante_update.calificacion,
             "descripcion": restaurante_update.descripcion,
             "instagram": restaurante_update.instagram,
             "ubicacion": restaurante_update.ubicacion,
@@ -242,12 +245,12 @@ def delete_Restaurante(request, restaurante_id):
 
     # Recargar la lista de reseñas después de la eliminación
     restaurantes = Restaurante.objects.all()
-    return redirect('restaurantes')
+    return redirect('Restos')
 
 #login y logout
 def register(request):
     if request.method == 'POST':
-        formulario = AppResto.forms.UserCreationForm(request.POST)
+        formulario = AppResto.forms.UserRegisterForm(request.POST)
 
         if formulario.is_valid():
             user = formulario.save()
@@ -255,10 +258,9 @@ def register(request):
 
             if authenticated_user is not None:
                 login(request, authenticated_user)
-                return render(request,'AppResto/inicio.html',{'mensaje':f'Bienvenido al sitio f{user}!'})  # Redirect to the appropriate URL after registration
-
+                return redirect('inicio')  # Redirect to the appropriate URL after registration
     else:
-        formulario = UserCreationForm()
+        formulario = AppResto.forms.UserRegisterForm()
 
     return render(request, "registro/register.html", {"formulario": formulario})
 
@@ -276,7 +278,7 @@ def login_request(request):
 
             if user is not None:
                 login(request, user)
-                return render(request, "AppResto/inicio.html", {'mensaje':f'Bienvenido al sitio {username}!'})
+                return redirect('inicio')
             else:
                 return render(request, "registro/login.html", {"mensaje":"Datos incorrectos"})
            
@@ -287,4 +289,35 @@ def login_request(request):
     formulario = AuthenticationForm()
 
     return render(request, "registro/login.html", {"formulario": formulario})
+
+#editar usuario
+@login_required
+def edit_Profile(request):
+
+    usuario = request.user
+
+    if request.method == 'POST':
+
+        miFormulario = AppResto.forms.UserEditForm(request.POST)
+
+        if miFormulario.is_valid():
+
+            informacion = miFormulario.cleaned_data
+
+            usuario.email = informacion['email']
+            usuario.password1 = informacion['password1']
+            usuario.password2 = informacion['password2']
+            usuario.last_name = informacion['last_name']
+            usuario.first_name = informacion['first_name']
+
+            usuario.save()
+
+            return redirect('inicio')
+
+    else:
+
+        miFormulario = AppResto.forms.UserEditForm(initial={'email': usuario.email,'password':usuario.password,'last_name':usuario.last_name,'first_name':usuario.first_name})
+
+    return render(request, "registro/edit_profile.html", {"miFormulario": miFormulario, "usuario": usuario})
+
 

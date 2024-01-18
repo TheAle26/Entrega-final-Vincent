@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User 
+
 # Create your models here.
 
 
@@ -31,13 +31,13 @@ class Reseña(models.Model):
 
     def __str__(self):
         return f"Reseña de {self.restaurante}"
-     """
+
 class Usuario(models.Model):
     usuario = models.CharField(max_length=99)
     password = models.CharField(max_length=20)
     email = models.EmailField()
 
-
+     """
 
 from django.db.models import Avg
 
@@ -66,7 +66,7 @@ class Restaurante(models.Model):
 class Reseña(models.Model):
     restaurante = models.ForeignKey(Restaurante, on_delete=models.CASCADE)
     puntuacion = models.FloatField()
-    ubicacion = models.CharField(max_length=99)
+    #ubicacion = models.CharField(max_length=99)
     fecha_de_visita = models.DateField()
     fecha_de_reseña = models.DateField(auto_now_add=True)
     reseña = models.CharField(max_length=150)
@@ -82,8 +82,10 @@ class Reseña(models.Model):
         return f"Reseña de {self.restaurante.nombre}"
 
     
-class Usuario(models.Model):
-    usuario = models.CharField(max_length=99)
-    password = models.CharField(max_length=20)
-    email = models.EmailField()
-    
+class User(models.Model):
+    # ... otros campos ...
+    username = models.CharField(max_length=150, unique=True)
+    email = models.EmailField(unique=True)
+    password1 = models.CharField(max_length=150)
+
+    # ... otras configuraciones ...
