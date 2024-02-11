@@ -1,6 +1,7 @@
 from django import forms 
-from .models import Restaurante, Usuario
+from .models import Restaurante
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
 
 
 class Restaurante_form(forms.Form):
@@ -21,7 +22,7 @@ class Restaurante_form(forms.Form):
 class Reseña_form(forms.Form):
     restaurante = forms.ModelChoiceField(queryset=Restaurante.objects.all(), empty_label=None, to_field_name="nombre", widget=forms.Select(attrs={'class': 'form-control'})) #quiero que sea una lista despegable de los que ya existen
     puntuacion = forms.FloatField(min_value=0,max_value=5) 
-    ubicacion = forms.CharField(max_length=250)
+    #ubicacion = forms.CharField(max_length=250)
     fecha_de_visita=forms.DateField()
     reseña=forms.CharField(max_length=150)
     foto=forms.ImageField()
@@ -33,16 +34,31 @@ class Reseña_form(forms.Form):
             pass
         return foto
 
-"""
+
 class UserRegisterForm(UserCreationForm):
-    email = forms.EmailField()
+    username = forms.CharField(label="Nombre de usuario")  # Cambié 'usuario' a 'username'
+    email = forms.EmailField(label="Correo electrónico")
     password1 = forms.CharField(label="Contraseña", widget=forms.PasswordInput)
     password2 = forms.CharField(label="Repetir contraseña", widget=forms.PasswordInput)
- 
-    class Meta:
-        model = Usuario
-        fields = ['usuario', 'email', 'password1', 'password2']
-        # Saca los mensajes de ayuda
-        help_texts = {k:"" for k in fields}
+    last_name = forms.CharField(label="Apellido")
+    first_name = forms.CharField(label="Nombre")
 
-"""
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'password1', 'password2', 'last_name', 'first_name']
+        help_texts = {k: "" for k in fields}
+
+
+
+# Clase 24, agregamos el UserEditForm
+class UserEditForm(forms.ModelForm):
+    email = forms.EmailField(label='Correo electrónico')
+    password1 = forms.CharField(label='Contraseña', widget=forms.PasswordInput)
+    password2 = forms.CharField(label='Repetir contraseña', widget=forms.PasswordInput)
+    last_name = forms.CharField(label='Apellido')
+    first_name = forms.CharField(label='Nombre')
+
+    class Meta:
+        model = User
+        fields = ['email', 'password1', 'password2', 'last_name', 'first_name']
+        help_texts = {k: "" for k in fields}

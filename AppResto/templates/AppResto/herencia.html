@@ -1,6 +1,6 @@
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
     {% load static %}
     <head>
    
@@ -26,14 +26,15 @@
 
                 {% endblock %}
                 {% if request.path == '/AppResto/user/' %}
-
-                <form method="post" action="{% url 'logout' %}">
-                    {% csrf_token %}
-                    <button a class="btn btn-outline-danger ">Logout</a> </button>
-     
-                </form>
+                <div class="btn-group">
+                    <a class="btn btn-outline-success" href="{% url 'edit_Profile' %}">Editar</a>
+                    <form method="post" action="{% url 'logout' %}">
+                        {% csrf_token %}
+                        <button class="btn btn-outline-danger" type="submit">Logout</button>
+                    </form>
                 
                  <!-- <a class="btn btn-outline-danger "href="{% url 'logout' %}">Logout</a>-->
+                </div>
                 {% elif user.is_authenticated %}
                 <a class="btn btn-outline-success" href="{% url 'user' %}"> {{ request.user.username }}</a>
 {% else %}
@@ -58,6 +59,13 @@
          {% endblock %}
 </div>
 </header>
+{%block abajo%}
+
+{%endblock%}
+
+{%block sobremi%}
+
+{%endblock%}
         </boddy>
         </html>
 

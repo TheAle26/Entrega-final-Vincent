@@ -2,11 +2,50 @@
 {% load static %}
 
 {% block muestra %}
-<h1 class="mb-5">aca esta tu usuario! PAGINA A REVISAR QUE HACER</h1>
+    <h1 class="mb-5">Hola {{ request.user.username }}</h1>
 {% endblock %}
 
 {% block botones %}
+    <a class="navbar-brand" href="{% url 'Restos' %}">Restaurantes</a>
+    <a class="navbar-brand" href="{% url 'reseñas' %}">Reseñas</a>
+{% endblock %}
 
-<a class="navbar-brand" href="{% url 'Restos' %}">Restaurantes</a>
-<a class="navbar-brand" href="{% url 'reseñas' %}">Reseñas</a>
+{% block abajo %}
+    <div style="display: flex; gap: 20px;">
+
+        <!-- Columna de Restaurantes -->
+        <div class="restaurante-container">
+            <h2>Tus Restaurantes</h2>
+            <ul>
+                {% for restaurante in restaurantes %}
+                    <li>{{ restaurante.nombre }} - <a href="{{ restaurante.instagram }}"><font color="red"><strong> Instagram</strong></font></a></li>
+                    <!-- Puedes agregar más detalles del restaurante si lo deseas -->
+                {% endfor %}
+            </ul>
+            <a class="btn btn-outline-success" href="{% url 'crear_restaurante' %}">
+                <strong><font size="4">Agregar</font></strong>
+            </a>
+            <a class="btn btn-outline-danger ms-2" href="{% url 'select_restaurante' %}">
+                <strong><font size="4">EDITAR</font></strong>
+            </a>
+        </div>
+
+        <!-- Columna de Reseñas -->
+        <div class="restaurante-container">
+            <h2>Tus Reseñas</h2>
+            <ul>
+                {% for reseña in reseñas %}
+                    <li>{{ reseña.restaurante }} - Puntuación: {{ reseña.puntuacion }}</li>
+                    <!-- Puedes agregar más detalles de la reseña si lo deseas -->
+                {% endfor %}
+            </ul>
+            <a class="btn btn-outline-success" href="{% url 'crear_reseña' %}">
+                <strong><font size="4">Agregar</font></strong>
+            </a>
+            <a class="btn btn-outline-danger ms-2" href="{% url 'select_reseña' %}">
+                <strong><font size="4">EDITAR</font></strong>
+            </a>
+        </div>
+
+    </div>
 {% endblock %}

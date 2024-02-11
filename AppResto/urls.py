@@ -31,4 +31,5 @@ urlpatterns=[
     #prueba
     path('prueba/', views.prueba, name='prueba'),
     path('logout/', LogoutView.as_view(template_name='registro/logout.html'), name='logout'),
+    path('edit_Profile/', views.edit_Profile, name='edit_Profile'),
 ]

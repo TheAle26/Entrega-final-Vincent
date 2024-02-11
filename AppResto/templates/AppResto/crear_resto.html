@@ -1,19 +1,70 @@
-
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nuevo Restaurante</title>
-</head>
+    {% load static %}
+    <head>
+   
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Landing Page - Start Bootstrap Theme</title>
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <!-- Bootstrap icons-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" type="text/css" />
+        <!-- Google fonts-->
+        <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="{% static 'AppResto/css/styles.css' %}"rel="stylesheet" />
+    </head>
 <body>
-    <a class="bootstrap-icons" href="{% url 'Restos' %}">Salir</a>
-    <h1>Cargar nuevo Restaurante</h1>
-    <form action="" method="post" enctype="multipart/form-data"> {% csrf_token %}
+    <a class="btn btn-secondary mb-3" href="{% url 'Restos' %}">Salir</a>
+    <div class="container mt-4">
+        <h1>Cargar nuevo Restaurante</h1>
+        <form action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
 
-        {{mi_formu.as_p}}
+            <!-- Nombre -->
+            <div class="mb-3">
+                <label for="{{ mi_formu.nombre.id_for_label }}">Nombre:</label>
+                {{ mi_formu.nombre }}
+            </div>
 
-        <input type="submit" value="Guardar">
-    </form>
+            <!-- Calificación -->
+            <div class="mb-3">
+                <label for="{{ mi_formu.calificacion.id_for_label }}">Calificación:</label>
+                {{ mi_formu.calificacion }}
+            </div>
+
+            <!-- Descripción -->
+            <div class="mb-3">
+                <label for="{{ mi_formu.descripcion.id_for_label }}">Descripción:</label>
+                {{ mi_formu.descripcion }}
+            </div>
+
+            <!-- Ubicación -->
+            <div class="mb-3">
+                <label for="{{ mi_formu.ubicacion.id_for_label }}">Ubicación:</label>
+                {{ mi_formu.ubicacion }}
+            </div>
+
+            <!-- Instagram -->
+            <div class="mb-3">
+                <label for="{{ mi_formu.instagram.id_for_label }}">Instagram:</label>
+                {{ mi_formu.instagram }}
+            </div>
+
+            <!-- Foto -->
+            <div class="mb-3">
+                <label for="{{ mi_formu.foto.id_for_label }}">Foto:</label>
+                {{ mi_formu.foto }}
+                {% if mi_formu.foto.value %}
+                    <img src="{{ mi_formu.foto.value.url }}" alt="Foto del restaurante" class="img-thumbnail mt-2">
+                {% endif %}
+            </div>
+
+            <input type="submit" class="btn btn-primary" value="Guardar">
+        </form>
+    </div>
 </body>
 </html>

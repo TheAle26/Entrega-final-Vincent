@@ -1,17 +1,67 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nueva Reseña</title>
-</head>
-<body>
-    <a class="bootstrap-icons" href="{% url 'reseñas' %}">Salir</a>
-    <h1>Crear nueva Reseña</h1>
+    {% load static %}
+    <head>
+   
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Landing Page - Start Bootstrap Theme</title>
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <!-- Bootstrap icons-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" type="text/css" />
+        <!-- Google fonts-->
+        <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="{% static 'AppResto/css/styles.css' %}"rel="stylesheet" />
+    </head>
+<body class="container mt-4">
 
-    <form action="" method="post" enctype="multipart/form-data"> {% csrf_token %}
-        {{ mi_formu.as_p }}
-        {{mensaje}}
+    <a class="btn btn-secondary mb-3" href="{% url 'reseñas' %}">Salir</a>
+    <h1 class="mb-4">Crear Nueva Reseña</h1>
 
-        <input type="submit" value="Guardar">
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <div class="mb-3">
+            <label for="{{ mi_formu.restaurante.id_for_label }}">Restaurante:</label>
+            {{ mi_formu.restaurante }}
+        </div>
+
+        <div class="mb-3">
+            <label for="{{ mi_formu.puntuacion.id_for_label }}">Puntuación:</label>
+            {{ mi_formu.puntuacion }}
+        </div>
+<!-- 
+        <div class="mb-3">
+            <label for="{{ mi_formu.ubicacion.id_for_label }}">Ubicación:</label>
+            {{ mi_formu.ubicacion }}
+        </div>
+    -->
+        <div class="mb-3">
+            <label for="{{ mi_formu.fecha_de_visita.id_for_label }}">Fecha de Visita:</label>
+            {{ mi_formu.fecha_de_visita }}
+        </div>
+
+        <div class="mb-3">
+            <label for="{{ mi_formu.reseña.id_for_label }}">Reseña:</label>
+            {{ mi_formu.reseña }}
+        </div>
+
+        <div class="mb-3">
+            <label for="{{ mi_formu.foto.id_for_label }}">Foto:</label>
+            {{ mi_formu.foto }}
+            {% if mi_formu.foto.value %}
+                <img src="{{ mi_formu.foto.value.url }}" alt="Foto de la reseña" class="img-thumbnail mt-2">
+            {% endif %}
+        </div>
+
+        <button type="submit" class="btn btn-primary">Guardar</button>
     </form>
+
+    <!-- Agrega el script de Bootstrap si es necesario -->
+    <!-- <script src="{% static 'path/to/bootstrap/js/bootstrap.bundle.min.js' %}"></script> -->
+</body>
+</html>

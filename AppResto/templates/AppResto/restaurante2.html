@@ -1,0 +1,48 @@
+{% extends 'AppResto/herencia.html' %}
+
+>
+                {% block botones %}
+                <a class="btn btn-secondary" href="{% url 'inicio' %}">Inicio</a>
+                <a class="navbar-brand" href="{% url 'reseñas' %}">Reseñas</a>
+                <a class="navbar-brand" href="{% url 'crear_restaurante' %}">Agregar Restaurante</a>
+                {% endblock %}
+
+        {% block buscaryeditar %}
+        <h1 class="mb-5">Aca hay Restaurantes!</h1>
+        <div class="d-flex align-items-center">
+            <a class="btn btn-secondary" href="{% url 'buscar_restaurante' %}">
+                <strong><font size="4">Buscar</font></strong>
+            </a>
+            <a class="btn btn-secondary ms-2" href="{% url 'select_restaurante' %}">
+                <strong><font size="4" color="red">EDITAR</font></strong>
+            </a>
+        </div>
+        
+     {% endblock %}
+
+                {% block muestra %}
+                <div class="row restaurant-item">
+
+                    {% for x in restaurantes %}
+                    <div class="col-md-4 col-centered my-3">
+                        <img src="{{ x.foto.url }}" alt="{{ x.nombre }}" class="img-fluid restaurant-image my-restaurant-image">
+                    </div>
+                        <!-- Texto a la derecha -->
+                        <div class="col-md-8 col-centered my-3 text-white restaurant-text"> 
+                            <div class="container position-relative">
+                                <div class="row justify-content-center">
+                                    <div class="col-xl-6">
+                                        <p><strong><font size="7">{{ x.nombre }}</font></strong></p>
+                                        <p>Calificacion: {{ x.calificacion }}</p>
+                                        <p>Descripcion: {{ x.descripcion }}</p>
+                                        <p>Ubicacion: {{ x.ubicacion }}</p>
+                                        <p>Usuario: {{ x.usuario }}</p>
+                                        <p>
+                                    </div>
+                                </div><a href="{{ x.instagram }}"><font color="white"><strong> Instagram</strong></font></a></p>
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                </div>
+    {% endblock %}
